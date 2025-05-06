@@ -18,9 +18,9 @@ public class Level1 extends World {
                 keyPressed = true;
             } else if (Greenfoot.isKeyDown("space")) {
                 if (selectedOption == 0) {
-                    Greenfoot.setWorld(new boyBedroom());
+                    Greenfoot.setWorld(new BoyBedroom());
                 } else {
-                    Greenfoot.setWorld(new girlBedroom());
+                    Greenfoot.setWorld(new GirlBedroom());
                 }                
                 keyPressed = true;
             }

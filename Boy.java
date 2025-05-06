@@ -3,7 +3,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * A Person that can walk with animation using WASD keys.
  */
-public class Person extends Actor
+public class Boy extends Actor
 {
     private GreenfootImage[] walkLeftImages;
     private GreenfootImage[] walkRightImages;
@@ -13,7 +13,7 @@ public class Person extends Actor
     private GreenfootImage idleLeft;
     private GreenfootImage idleRight;
     
-    public Person() {
+    public Boy() {
         walkLeftImages = new GreenfootImage[3];
         walkRightImages = new GreenfootImage[3];
         idleLeft = new GreenfootImage("boyWalkingAni/leftIdle.png");
@@ -39,25 +39,35 @@ public class Person extends Actor
     private void handleMovement() {
         boolean isMoving = false;
 
+        // Bepaal de nieuwe locatie op basis van de toetsen
+        int newX = getX();
+        int newY = getY();
+
         if (Greenfoot.isKeyDown("w")) {
-            setLocation(getX(), getY() - 2);
+            newY -= 3;
             isMoving = true;
         }
         if (Greenfoot.isKeyDown("a")) {
-            setLocation(getX() - 2, getY());
+            newX -= 3;
             lastDirection = "left";
             isMoving = true;
         }
         if (Greenfoot.isKeyDown("s")) {
-            setLocation(getX(), getY() + 2);
+            newY += 3;
             isMoving = true;
         }
         if (Greenfoot.isKeyDown("d")) {
-            setLocation(getX() + 2, getY());
+            newX += 3;
             lastDirection = "right";
             isMoving = true;
         }
 
+        // Controleer of de nieuwe locatie geen muur raakt
+        if (!isTouchingWall(newX, newY)) {
+            setLocation(newX, newY);
+        }
+
+        // Animeer het bewegen of toon de idle-afbeelding
         if (isMoving) {
             animateWalk();
         } else {
@@ -74,8 +84,8 @@ public class Person extends Actor
     private void animateWalk() {
         animationCounter++;
     
-        if (animationCounter >= 5) { // Adjust 5 to control animation speed (lower = faster)
-            animationCounter = 0; // Reset the counter every cycle
+        if (animationCounter >= 5) { // Pas 5 aan om de snelheid van de animatie te regelen (lager = sneller)
+            animationCounter = 0; // Reset de teller na elke cyclus
     
             imageIndex = (imageIndex + 1) % walkLeftImages.length;
     
@@ -85,5 +95,12 @@ public class Person extends Actor
                 setImage(walkLeftImages[imageIndex]);
             }
         }
+    }
+
+    // Controleer of er een muur is op de nieuwe locatie
+    private boolean isTouchingWall(int x, int y) {
+        // Stel hier in welke actor een muur vertegenwoordigt (bijvoorbeeld "Wall")
+        Actor wall = getOneObjectAtOffset(x - getX(), y - getY(), Wall.class);
+        return wall != null;
     }
 }

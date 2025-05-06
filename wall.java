@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class wall extends Actor
+public class Wall extends Actor
 {
     /**
      * Act - do whatever the wall wants to do. This method is called whenever
@@ -15,5 +15,11 @@ public class wall extends Actor
     public void act()
     {
         // Add your action code here.
+    }
+    public Wall(){
+        GreenfootImage image = new GreenfootImage(32,32);
+        image.setColor(new Color(0,0,0,0));
+        setImage(image); 
+        
     }
 }
