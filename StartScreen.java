@@ -5,7 +5,7 @@ public class StartScreen extends World
     public StartScreen()
     {    
         super(1280, 720, 1); 
-        setBackground(new GreenfootImage("titlescreen.jpg")); // Voeg dit bestand toe aan /images
+        setBackground(new GreenfootImage("titlescreen.jpg"));
     
         showText("Press enter to start", getWidth()/2, 450);
     }
@@ -13,7 +13,7 @@ public class StartScreen extends World
 
     public void act() {
         if (Greenfoot.isKeyDown("enter")) {
-            Greenfoot.setWorld(new Level1()); // Start het eerste level
+            Greenfoot.setWorld(new Level1());
         }
     }
 }

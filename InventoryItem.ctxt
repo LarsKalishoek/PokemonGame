@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=InventoryItem
+comment1.params=itemName
+comment1.target=InventoryItem(java.lang.String)
+comment2.params=
+comment2.target=void\ updateImage()
+numComments=3

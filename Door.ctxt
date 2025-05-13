@@ -1,7 +1,7 @@
 #BlueJ class context
 comment0.target=Door
-comment1.params=
-comment1.target=Door()
+comment1.params=targetWorld\ requiredDirection\ spawnX\ spawnY
+comment1.target=Door(java.lang.Class,\ java.lang.String,\ int,\ int)
 comment2.params=
 comment2.target=void\ act()
 comment3.params=

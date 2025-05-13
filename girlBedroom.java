@@ -19,8 +19,7 @@ public class GirlBedroom extends World
         super(600, 400, 1); 
         
         GreenfootImage bg = new GreenfootImage("girlBedroom.png");
-        bg.scale(getWidth(), getHeight()); // schaal tot wereldgrootte
+        bg.scale(getWidth(), getHeight()); 
         setBackground(bg);
-        addObject(new Boy(), getWidth()/2, getHeight()/2);
     }
 }

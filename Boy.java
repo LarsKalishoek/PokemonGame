@@ -1,10 +1,11 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A Person that can walk with animation using WASD keys.
  */
-public class Boy extends Actor
-{
+public class Boy extends Actor {
     private GreenfootImage[] walkLeftImages;
     private GreenfootImage[] walkRightImages;
     private int imageIndex = 0;
@@ -12,39 +13,79 @@ public class Boy extends Actor
     private String lastDirection = "right";
     private GreenfootImage idleLeft;
     private GreenfootImage idleRight;
-    
+
+    private int teleportCooldown = 0;
+
+    private Set<String> inventory;  // Set to store unique collected item IDs
+
     public Boy() {
         walkLeftImages = new GreenfootImage[3];
         walkRightImages = new GreenfootImage[3];
+
         idleLeft = new GreenfootImage("boyWalkingAni/leftIdle.png");
-        idleLeft.scale(50,50);
-        
+        idleLeft.scale(50, 50);
+
         idleRight = new GreenfootImage(idleLeft);
         idleRight.mirrorHorizontally();
+
         for (int i = 0; i < 3; i++) {
             walkLeftImages[i] = new GreenfootImage("boyWalkingAni/walkLeft" + (i + 1) + ".png");
-            walkLeftImages[i].scale(50 ,50);
-            
+            walkLeftImages[i].scale(50, 50);
+
             walkRightImages[i] = new GreenfootImage(walkLeftImages[i]);
             walkRightImages[i].mirrorHorizontally();
         }
 
         setImage(walkRightImages[0]);
+
+        teleportCooldown = 20;
+
+        inventory = new HashSet<>();  // Use a HashSet to avoid duplicates
     }
 
     public void act() {
+        if (teleportCooldown > 0) {
+            teleportCooldown--;
+        }
+
         handleMovement();
+    }
+
+    public String getLastDirection() {
+        return lastDirection;
+    }
+
+    public boolean canUseDoor() {
+        return teleportCooldown <= 0;
+    }
+
+    public void setTeleportCooldown(int frames) {
+        teleportCooldown = frames;
+    }
+
+    public void scaleAllImages(double factor) {
+        int newSize = (int)(50 * factor);
+
+        for (int i = 0; i < walkLeftImages.length; i++) {
+            walkLeftImages[i].scale(newSize, newSize);
+            walkRightImages[i].scale(newSize, newSize);
+        }
+
+        idleLeft.scale(newSize, newSize);
+        idleRight.scale(newSize, newSize);
+
+        setImage(lastDirection.equals("right") ? idleRight : idleLeft);
     }
 
     private void handleMovement() {
         boolean isMoving = false;
 
-        // Bepaal de nieuwe locatie op basis van de toetsen
         int newX = getX();
         int newY = getY();
 
         if (Greenfoot.isKeyDown("w")) {
             newY -= 3;
+            lastDirection = "up";
             isMoving = true;
         }
         if (Greenfoot.isKeyDown("a")) {
@@ -54,6 +95,7 @@ public class Boy extends Actor
         }
         if (Greenfoot.isKeyDown("s")) {
             newY += 3;
+            lastDirection = "down";
             isMoving = true;
         }
         if (Greenfoot.isKeyDown("d")) {
@@ -62,12 +104,10 @@ public class Boy extends Actor
             isMoving = true;
         }
 
-        // Controleer of de nieuwe locatie geen muur raakt
         if (!isTouchingWall(newX, newY)) {
             setLocation(newX, newY);
         }
 
-        // Animeer het bewegen of toon de idle-afbeelding
         if (isMoving) {
             animateWalk();
         } else {
@@ -83,12 +123,10 @@ public class Boy extends Actor
 
     private void animateWalk() {
         animationCounter++;
-    
-        if (animationCounter >= 5) { // Pas 5 aan om de snelheid van de animatie te regelen (lager = sneller)
-            animationCounter = 0; // Reset de teller na elke cyclus
-    
+
+        if (animationCounter >= 5) {
+            animationCounter = 0;
             imageIndex = (imageIndex + 1) % walkLeftImages.length;
-    
             if (lastDirection.equals("right")) {
                 setImage(walkRightImages[imageIndex]);
             } else {
@@ -97,10 +135,18 @@ public class Boy extends Actor
         }
     }
 
-    // Controleer of er een muur is op de nieuwe locatie
     private boolean isTouchingWall(int x, int y) {
-        // Stel hier in welke actor een muur vertegenwoordigt (bijvoorbeeld "Wall")
         Actor wall = getOneObjectAtOffset(x - getX(), y - getY(), Wall.class);
         return wall != null;
+    }
+
+    // Inventory logic
+    public void addItemToInventory(String itemId) {
+        inventory.add(itemId);
+        System.out.println(itemId + " has been added to your inventory!");
+    }
+
+    public boolean hasCollected(String itemId) {
+        return inventory.contains(itemId);
     }
 }

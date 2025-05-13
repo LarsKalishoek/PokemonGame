@@ -1,0 +1,15 @@
+#BlueJ class context
+comment0.target=GameWorld
+comment1.params=viewWidth\ viewHeight\ cellSize\ background\ worldWidth\ worldHeight
+comment1.target=GameWorld(int,\ int,\ int,\ greenfoot.GreenfootImage,\ int,\ int)
+comment2.params=
+comment2.target=void\ act()
+comment3.params=
+comment3.target=void\ handleMenuToggle()
+comment4.params=dx\ dy
+comment4.target=void\ scroll(int,\ int)
+comment5.params=
+comment5.target=int\ getScrolledX()
+comment6.params=
+comment6.target=int\ getScrolledY()
+numComments=7
