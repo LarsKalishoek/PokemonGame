@@ -16,16 +16,19 @@ public class BoyBedroom extends GameWorld {
         bg.scale(getWidth(), getHeight());
         setBackground(bg);
         
-        PokeBall pokeball = new PokeBall("pokeball_1");
+        PokeBall pokeball = new PokeBall("pokeball_1", "Potion",1 );
+        PokeBall pokeball1 = new PokeBall("pokeball_2", "Pokeball",5 );
         pokeball.getImage().scale(30,30);
+        pokeball1.getImage().scale(30,30);
         addObject(pokeball, 190,110);
+        addObject(pokeball1, 250,150);
         
         addObject(new Boy(), spawnX, spawnY);
         addObject(new Door(BoyDownstairs.class, "up", 444, 130), 480, 75);
 
         int tileSize = 32;
         int wallY = 75;
-
+        
         for (int x = 0; x < 430; x += 32) {
             addObject(new Wall(), x + 16, wallY);
         }
@@ -38,30 +41,6 @@ public class BoyBedroom extends GameWorld {
         for (int y = 0; y < getHeight(); y += tileSize) {
             addObject(new Wall(), tileSize / 2, y + tileSize / 2);
             addObject(new Wall(), getWidth() - tileSize / 2, y + tileSize / 2);
-        }
-    }
-
-    public void act() {
-        handleMenuToggle();
-    }
-
-    private void handleMenuToggle() {
-        if (Greenfoot.isKeyDown("m") && !toggleCooldown) {
-            toggleCooldown = true;
-
-            if (!menuVisible) {
-                sideMenu = new SideMenu();
-                addObject(sideMenu, getWidth() - sideMenu.getImage().getWidth() / 2, getHeight() / 2);
-
-                menuVisible = true;
-            } else {
-                removeObject(sideMenu);
-                menuVisible = false;
-            }
-        }
-
-        if (!Greenfoot.isKeyDown("m")) {
-            toggleCooldown = false;
         }
     }
 }

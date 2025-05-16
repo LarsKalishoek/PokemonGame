@@ -1,20 +1,25 @@
 import greenfoot.*;
+import java.util.HashMap;
 
 public class InventoryScreen extends World {
     private GreenfootImage bgImage;
     private int scrollOffset = 0;
     private static final int ITEM_HEIGHT = 40;
-    private World previousWorld; // To store the previous world
+    private World previousWorld;
 
     public InventoryScreen(World previousWorld) {
-        super(600, 400, 1); // Set the size of the inventory screen
-        this.previousWorld = previousWorld; // Store the previous world
-        bgImage = new GreenfootImage("InventoryBgBoy.png"); // Set a background image
+        super(600, 400, 1);
+        this.previousWorld = previousWorld;
+        bgImage = new GreenfootImage("InventoryBgBoy.png");
         setBackground(bgImage);
 
         // Add items to the inventory screen
-        for (int i = 0; i < 10; i++) { // Change 10 to the number of items
-            addObject(new InventoryItem("Item " + (i + 1)), 100, 50 + (i * ITEM_HEIGHT));
+        HashMap<String, Integer> items = Inventory.getItems();
+        int i = 0;
+        for (String itemName : items.keySet()) {
+            int quantity = items.get(itemName);
+            addObject(new InventoryItem(itemName + " x" + quantity), 100, 50 + (i * ITEM_HEIGHT));
+            i++;
         }
     }
 
@@ -24,10 +29,10 @@ public class InventoryScreen extends World {
     }
 
     private void handleScrolling() {
-        if (Greenfoot.isKeyDown("UP") && scrollOffset > 0) {
+        if (Greenfoot.isKeyDown("w") && scrollOffset > 0) {
             scrollOffset -= ITEM_HEIGHT;
             scrollItems();
-        } else if (Greenfoot.isKeyDown("DOWN") && scrollOffset < (ITEM_HEIGHT * 10 - getHeight())) {
+        } else if (Greenfoot.isKeyDown("s") && scrollOffset < (ITEM_HEIGHT * 10 - getHeight())) {
             scrollOffset += ITEM_HEIGHT;
             scrollItems();
         }

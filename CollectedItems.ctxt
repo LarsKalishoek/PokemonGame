@@ -1,9 +1,11 @@
 #BlueJ class context
 comment0.target=CollectedItems
-comment1.params=id
-comment1.target=void\ collect(java.lang.String)
+comment1.params=
+comment1.target=void\ reset()
 comment2.params=id
-comment2.target=boolean\ isCollected(java.lang.String)
-comment3.params=
-comment3.target=void\ reset()
-numComments=4
+comment2.target=void\ collect(java.lang.String)
+comment3.params=id
+comment3.target=boolean\ isCollected(java.lang.String)
+comment4.params=
+comment4.target=void\ markAsReset()
+numComments=5

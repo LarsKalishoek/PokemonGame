@@ -11,7 +11,7 @@ public class LittleRoot extends GameWorld {
         addObject(boy, spawnX, spawnY);
 
         addObject(new Door(BoyDownstairs.class, "up", 471, 312), 311, 297);
-        addObject(new Door(Lab.class, "up", 300,200), 375, 540);
+        addObject(new Door(Lab.class, "up", 320,540), 375, 540);
     }
 
     public void act() {

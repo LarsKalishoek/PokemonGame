@@ -43,13 +43,13 @@ public class Door extends Actor {
         fade.fill();
         currentWorld.getBackground().drawImage(fade, 0, 0);
         Greenfoot.delay(30);
-    
+
+        // Transition to the next world
         try {
             World newWorld = targetWorld.getDeclaredConstructor(int.class, int.class).newInstance(spawnX, spawnY);
             Greenfoot.setWorld(newWorld);
         } catch (Exception e) {
             System.out.println("Error loading world: " + e.getMessage());
         }
-}
-
+    }
 }

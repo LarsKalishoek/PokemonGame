@@ -7,7 +7,7 @@ public class Lab extends GameWorld {
         super(600, 400, 1, new GreenfootImage("Lab.png"), 593, 590);
 
         boy = new Boy();
-        boy.scaleAllImages(0.75);
+        boy.scaleAllImages(0.9);
         addObject(boy, spawnX, spawnY);
         addObject(new Door(LittleRoot.class, "down", 375, 560),320,560);
     }

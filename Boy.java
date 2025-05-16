@@ -47,7 +47,8 @@ public class Boy extends Actor {
         if (teleportCooldown > 0) {
             teleportCooldown--;
         }
-
+        GameWorld gw = (GameWorld) getWorld();
+        if (gw.isMenuOpen()) return;
         handleMovement();
     }
 
