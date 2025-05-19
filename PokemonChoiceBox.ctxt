@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=PokemonChoiceBox
+comment1.params=
+comment1.target=PokemonChoiceBox()
+comment2.params=dummy
+comment2.target=PokemonChoiceBox(java.lang.String)
+comment3.params=
+comment3.target=void\ act()
+comment4.params=
+comment4.target=void\ updateImage()
+comment5.params=
+comment5.target=void\ choosePokemon()
+numComments=6

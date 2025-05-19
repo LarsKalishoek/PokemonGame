@@ -22,7 +22,6 @@ public class BoyBedroom extends GameWorld {
         pokeball1.getImage().scale(30,30);
         addObject(pokeball, 190,110);
         addObject(pokeball1, 250,150);
-        
         addObject(new Boy(), spawnX, spawnY);
         addObject(new Door(BoyDownstairs.class, "up", 444, 130), 480, 75);
 

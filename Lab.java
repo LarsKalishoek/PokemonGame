@@ -2,14 +2,13 @@ import greenfoot.*;
 
 public class Lab extends GameWorld {
     private Boy boy;
-
     public Lab(int spawnX, int spawnY) {
         super(600, 400, 1, new GreenfootImage("Lab.png"), 593, 590);
-
         boy = new Boy();
         boy.scaleAllImages(0.9);
-        addObject(boy, spawnX, spawnY);
+        addObject(new Professor(), 320, 300);
         addObject(new Door(LittleRoot.class, "down", 375, 560),320,560);
+        addObject(boy, spawnX, spawnY);
     }
 
     public void act() {

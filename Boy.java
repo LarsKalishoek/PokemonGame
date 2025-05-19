@@ -16,8 +16,13 @@ public class Boy extends Actor {
 
     private int teleportCooldown = 0;
 
-    private Set<String> inventory;  // Set to store unique collected item IDs
+    private Set<String> inventory; 
+    private boolean canMove = true;
 
+    public void setCanMove(boolean canMove) {
+        this.canMove = canMove;
+    }
+    
     public Boy() {
         walkLeftImages = new GreenfootImage[3];
         walkRightImages = new GreenfootImage[3];
@@ -44,11 +49,15 @@ public class Boy extends Actor {
     }
 
     public void act() {
+        if (!canMove) return;
+    
         if (teleportCooldown > 0) {
             teleportCooldown--;
         }
+    
         GameWorld gw = (GameWorld) getWorld();
         if (gw.isMenuOpen()) return;
+    
         handleMovement();
     }
 
