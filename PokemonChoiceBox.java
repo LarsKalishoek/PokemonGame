@@ -1,74 +1,94 @@
-import greenfoot.*;
+import greenfoot.*; 
+import java.util.*;
 
 public class PokemonChoiceBox extends Actor {
-    private String[] options = {"Treecko", "Torchic", "Mudkip"};
-    private int selectedIndex = 0;
-    private GreenfootImage boxImage;
-    private boolean keyCooldown = false;
+    private String[] dialogue = {
+        "You chose: Treecko",
+        "Treecko has been added to your inventory!"
+    };
+    private int dialogueIndex = 0;
+    private DialogueBox dialogueBox;
+    private boolean inDialogue = false;
+    private boolean spacePressedLastFrame = false;
     private boolean hasChosen = false;
-
-    public PokemonChoiceBox() {
-        boxImage = new GreenfootImage(200, 100);
-        updateImage();
-    }
-
-    public PokemonChoiceBox(String dummy) {
-        this();
-    }
 
     public void act() {
         if (hasChosen) return;
-
-        if (Greenfoot.isKeyDown("up") && !keyCooldown) {
-            selectedIndex = (selectedIndex + options.length - 1) % options.length;
-            updateImage();
-            keyCooldown = true;
-        } else if (Greenfoot.isKeyDown("down") && !keyCooldown) {
-            selectedIndex = (selectedIndex + 1) % options.length;
-            updateImage();
-            keyCooldown = true;
-        } else if (!Greenfoot.isKeyDown("up") && !Greenfoot.isKeyDown("down")) {
-            keyCooldown = false;
-        }
-
-        if (Greenfoot.isKeyDown("enter")) {
-            hasChosen = true;
+        
+        if (inDialogue) {
+            handleDialogueInput();
+        } else {
             choosePokemon();
         }
-    }
 
-    private void updateImage() {
-        boxImage.clear();
-        boxImage.setColor(Color.WHITE);
-        boxImage.fill();
-        boxImage.setColor(Color.BLACK);
-        boxImage.drawRect(0, 0, boxImage.getWidth()-1, boxImage.getHeight()-1);
-
-        for (int i = 0; i < options.length; i++) {
-            if (i == selectedIndex) {
-                boxImage.setColor(Color.YELLOW);
-                boxImage.fillRect(5, i * 30 + 5, 190, 30);
-            }
-            boxImage.setColor(Color.BLACK);
-            boxImage.drawString(options[i], 10, i * 30 + 25);
+        if (inDialogue && dialogueBox != null && !getWorld().getObjects(DialogueBox.class).contains(dialogueBox)) {
+            System.out.println("Failsafe: dialogueBox disappeared unexpectedly.");
+            endDialogue(getWorld());
         }
 
-        setImage(boxImage);
+        spacePressedLastFrame = Greenfoot.isKeyDown("space");
     }
 
     private void choosePokemon() {
-        String chosen = options[selectedIndex];
-        System.out.println("You chose: " + chosen);
+        System.out.println("PokemonChoiceBox is alive and acting");
 
-        World world = getWorld();
-        Boy boy = (Boy) world.getObjects(Boy.class).get(0);
-        boy.addItemToInventory(chosen);
+        if (!inDialogue) {
+            String chosenPokemon = "Treecko";
+            System.out.println("You chose: " + chosenPokemon);
 
-        GameState.hasChosenStarter = true;
+            // Get player and inventory
+            List<Boy> boys = getWorld().getObjects(Boy.class);
+            if (!boys.isEmpty()) {
+                Boy boy = boys.get(0);
+                boy.addItemToInventory(chosenPokemon);
+                System.out.println(chosenPokemon + " has been added to your inventory!");
 
-        world.removeObjects(world.getObjects(PokemonChoiceBox.class));
+                // Start dialogue
+                startDialogue(getWorld());
+            }
+        }
+    }
 
-        world.addObject(new DialogueBox("You chose " + chosen + "! Take good care of it!"), 300, 350);
-        boy.setCanMove(true);
+    private void startDialogue(World world) {
+        System.out.println("Starting dialogue...");
+        inDialogue = true;
+        dialogueIndex = 0;
+        dialogueBox = new DialogueBox(dialogue[dialogueIndex]);
+        world.addObject(dialogueBox, world.getWidth() / 2, world.getHeight() - 50);
+    }
+
+    private void handleDialogueInput() {
+        boolean spaceNow = Greenfoot.isKeyDown("space");
+
+        // Trigger next dialogue step only on new key press
+        if (spaceNow && !spacePressedLastFrame) {
+            nextDialogueStep(getWorld());
+        }
+    }
+
+    private void nextDialogueStep(World world) {
+        dialogueIndex++;
+        System.out.println("nextDialogueStep called, dialogueIndex: " + dialogueIndex + "/" + dialogue.length);
+
+        if (dialogueIndex < dialogue.length) {
+            dialogueBox.updateText(dialogue[dialogueIndex]);
+        } else {
+            System.out.println("Reached end of dialogue, calling endDialogue()");
+            endDialogue(world);
+        }
+    }
+
+    private void endDialogue(World world) {
+        System.out.println("endDialogue() - Removing dialogue box and enabling movement");
+        if (dialogueBox != null) {
+            world.removeObject(dialogueBox);
+        }
+        inDialogue = false;
+
+        List<Boy> boys = world.getObjects(Boy.class);
+        if (!boys.isEmpty()) {
+            Boy boy = boys.get(0);
+            boy.setCanMove(true);
+        }
     }
 }

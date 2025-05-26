@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=PokemonParty
+comment1.params=name
+comment1.target=void\ addPokemon(java.lang.String)
+comment2.params=name
+comment2.target=Pokemon\ createPokemonFromName(java.lang.String)
+comment3.params=
+comment3.target=java.util.HashMap\ getPokemons()
+comment4.params=
+comment4.target=boolean\ hasStarter()
+comment5.params=
+comment5.target=void\ clear()
+numComments=6

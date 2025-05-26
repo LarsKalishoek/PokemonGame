@@ -16,7 +16,7 @@ public class DialogueBox extends Actor {
     }
 
     public void updateText(String text) {
-        boxImage.clear();
+        boxImage = new GreenfootImage(400, 100);
         boxImage.setColor(Color.WHITE);
         boxImage.fillRect(0, 0, 400, 100);
         boxImage.setColor(Color.BLACK);

@@ -46,17 +46,25 @@ public class PokemonSelectionMenu extends Actor {
     private void confirmSelection() {
         String chosen = options[selected];
         System.out.println("You chose: " + chosen);
-
-        // Add to inventory (assuming you have access to the Boy instance)
+    
         GameWorld gw = (GameWorld) getWorld();
-        Boy boy = gw.getBoy();  // You'll need a method like getBoy() in GameWorld
-        boy.addItemToInventory(chosen);
-
-        // Show confirmation
-        gw.addObject(new DialogueBox("You chose " + chosen + "!"), 300, 350);
-
-        // Remove the menu
+    
+        Boy boy = (Boy) gw.getObjects(Boy.class).get(0); 
+        if (boy == null) {
+            System.out.println("Error: Boy not found in world!");
+            return;
+        }
+    
+        boy.addPokemonToInventory(chosen);
+        boy.setCanMove(false);
+    
+        GameState.hasChosenStarter = true;
+    
+        gw.addObject(new FinalStarterDialogueBox("You chose " + chosen + "!"), 300, 350);
+    
         gw.removeObject(this);
     }
+
+
 }
     

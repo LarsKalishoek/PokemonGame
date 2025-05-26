@@ -53,10 +53,19 @@ public class SideMenu extends Actor {
         if (Greenfoot.isKeyDown("ENTER")) {
             if (selectedIndex == 1) { // "Inventory" option
                 openInventory();
-                Greenfoot.delay(10); // Small delay to prevent immediate input in the new screen
+                Greenfoot.delay(10);
+            } 
+            else if (selectedIndex == 0) { // "Pokémon" option
+                openPokemonInventory();
+                Greenfoot.delay(10);
             }
         }
     }
+    
+    private void openPokemonInventory() {
+        Greenfoot.setWorld(new PokemonInventoryScreen(parentWorld));
+    }
+
 
     private void updateMenu() {
         // Clear the background

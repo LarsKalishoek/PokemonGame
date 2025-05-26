@@ -2,8 +2,10 @@
 comment0.target=Door
 comment1.params=targetWorld\ requiredDirection\ spawnX\ spawnY
 comment1.target=Door(java.lang.Class,\ java.lang.String,\ int,\ int)
-comment2.params=
-comment2.target=void\ act()
+comment2.params=targetWorld\ requiredDirection\ spawnX\ spawnY\ requireStarter
+comment2.target=Door(java.lang.Class,\ java.lang.String,\ int,\ int,\ boolean)
 comment3.params=
-comment3.target=void\ startLevelTransition()
-numComments=4
+comment3.target=void\ act()
+comment4.params=
+comment4.target=void\ startLevelTransition()
+numComments=5

@@ -45,7 +45,7 @@ public class Boy extends Actor {
 
         teleportCooldown = 20;
 
-        inventory = new HashSet<>();  // Use a HashSet to avoid duplicates
+        inventory = new HashSet<>(); 
     }
 
     public void act() {
@@ -60,6 +60,12 @@ public class Boy extends Actor {
     
         handleMovement();
     }
+    
+    public void addPokemonToInventory(String pokemonName) {
+        PokemonParty.addPokemon(pokemonName);
+        System.out.println(pokemonName + " added to your Pokémon inventory.");
+    }
+
 
     public String getLastDirection() {
         return lastDirection;

@@ -89,6 +89,6 @@ public class Professor extends Actor {
 
 
     private void showPokemonChoices(World world) {
-        world.addObject(new PokemonChoiceBox(), 300, 350);
+        world.addObject(new PokemonSelectionMenu(), 300, 350);
     }
 }
