@@ -27,11 +27,14 @@ public class Door extends Actor {
     public void act() {
         if (!transitioning && isTouching(Boy.class)) {
             Boy boy = (Boy) getOneIntersectingObject(Boy.class);
-            if (boy != null && boy.canUseDoor() && boy.getLastDirection().equals(requiredDirection)) {
+            if (boy != null && boy.canUseDoor() && boy.getLastDirection().equals(requiredDirection) && isDirectionKeyPressed(boy)) {
                 // Require starter Pokémon before entering
                 if (requireStarter && !PokemonParty.hasStarter()) {
                     World world = getWorld();
-                    world.addObject(new Label("You need your first Pokémon!", 24), world.getWidth() / 2, 50);
+                    if (world instanceof GameWorld) {
+                        ((GameWorld) world).setTextboxActive(true);
+                    }
+                    world.addObject(new Textbox("You need your first Pokémon!"), world.getWidth() / 2, world.getHeight() - 55);
                     return;
                 }
 
@@ -40,6 +43,16 @@ public class Door extends Actor {
                 startLevelTransition();
             }
         }
+    }
+    
+    private boolean isDirectionKeyPressed(Boy boy) {
+        switch (requiredDirection) {
+            case "up": return boy.isKeyDown("w");
+            case "down": return boy.isKeyDown("s");
+            case "left": return boy.isKeyDown("a");
+            case "right": return boy.isKeyDown("d");
+        }
+        return false;
     }
 
     private void startLevelTransition() {
@@ -51,14 +64,12 @@ public class Door extends Actor {
             }
         }
 
-        // Fade out
         GreenfootImage fade = new GreenfootImage(currentWorld.getWidth(), currentWorld.getHeight());
         fade.setColor(Color.BLACK);
         fade.fill();
         currentWorld.getBackground().drawImage(fade, 0, 0);
         Greenfoot.delay(30);
-
-        // Transition to the next world
+        
         try {
             World newWorld = targetWorld.getDeclaredConstructor(int.class, int.class).newInstance(spawnX, spawnY);
             Greenfoot.setWorld(newWorld);

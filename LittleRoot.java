@@ -16,7 +16,7 @@ public class LittleRoot extends GameWorld {
     }
 
     public void act() {
-        super.act(); // keep menu toggle working
+        super.act();
         centerCameraOn(boy);
     }
 

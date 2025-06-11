@@ -7,6 +7,7 @@ public abstract class GameWorld extends World {
     protected Scroller scroller;
     protected GreenfootImage backgroundImage;
     private Boy boy;
+    private boolean textboxActive = false;
 
     public GameWorld(int viewWidth, int viewHeight, int cellSize, GreenfootImage background, int worldWidth, int worldHeight) {
         super(viewWidth, viewHeight, cellSize, false);
@@ -25,12 +26,21 @@ public abstract class GameWorld extends World {
     public void act() {
         handleMenuToggle();
     }
+    
     public boolean isMenuOpen() {
         return menuVisible;
     }
 
     public Boy getBoy() {
         return boy;
+    }
+    
+    public boolean isTextboxActive() {
+        return textboxActive;
+    }
+    
+    public void setTextboxActive(boolean active) {
+        this.textboxActive = active;
     }
     
     private void handleMenuToggle() {
