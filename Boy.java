@@ -50,6 +50,9 @@ public class Boy extends Actor {
 
     public void act() {
         if (!canMove) return;
+        if (getWorld() instanceof GameWorld && ((GameWorld) getWorld()).isTextboxActive()) {
+            return;
+        }
     
         if (teleportCooldown > 0) {
             teleportCooldown--;
@@ -155,8 +158,11 @@ public class Boy extends Actor {
         Actor wall = getOneObjectAtOffset(x - getX(), y - getY(), Wall.class);
         return wall != null;
     }
+    
+    public boolean isKeyDown(String key) {
+        return Greenfoot.isKeyDown(key);
+    }
 
-    // Inventory logic
     public void addItemToInventory(String itemId) {
         inventory.add(itemId);
         System.out.println(itemId + " has been added to your inventory!");
