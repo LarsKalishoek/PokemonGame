@@ -12,7 +12,7 @@ public class LittleRoot extends GameWorld {
 
         addObject(new Door(BoyDownstairs.class, "up", 471, 312), 311, 297);
         addObject(new Door(Lab.class, "up", 320, 540), 375, 540);
-        addObject(new Door(Lab.class, "up", 320, 540, true), 482, 15);
+        addObject(new Door(Route101.class, "up",404, 697, true), 482, 15);
 
         placeWalls();
     }
