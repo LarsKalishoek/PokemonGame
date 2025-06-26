@@ -1,13 +1,15 @@
 #BlueJ class context
 comment0.target=Route101
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ Route101\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment0.text=\r\n\ Route101\ -\ bevat\ het\ gras\ en\ random\ encounters\r\n
 comment1.params=spawnX\ spawnY
 comment1.target=Route101(int,\ int)
-comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ Route101.\r\n\ \r\n
 comment2.params=
 comment2.target=void\ act()
 comment3.params=actor
 comment3.target=void\ centerCameraOn(greenfoot.Actor)
 comment4.params=path\ scale
 comment4.target=greenfoot.GreenfootImage\ getScaledBackground(java.lang.String,\ double)
-numComments=5
+comment5.params=startX\ startY\ cols\ rows
+comment5.target=void\ placeGrassBlock(int,\ int,\ int,\ int)
+comment5.text=\r\n\ Helperfunctie\ om\ een\ blok\ gras\ toe\ te\ voegen.\r\n\ @param\ startX\ linkerbovenhoek\ X\ (geschaald)\r\n\ @param\ startY\ linkerbovenhoek\ Y\ (geschaald)\r\n\ @param\ cols\ aantal\ kolommen\ (horizontaal)\r\n\ @param\ rows\ aantal\ rijen\ (verticaal)\r\n
+numComments=6

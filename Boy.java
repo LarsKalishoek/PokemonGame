@@ -13,9 +13,8 @@ public class Boy extends Actor {
     private String lastDirection = "right";
     private GreenfootImage idleLeft;
     private GreenfootImage idleRight;
-
+    private int encounterCooldown = 0;
     private int teleportCooldown = 0;
-
     private Set<String> inventory; 
     private boolean canMove = true;
 
@@ -62,8 +61,19 @@ public class Boy extends Actor {
         if (gw.isMenuOpen()) return;
     
         handleMovement();
+        checkForGrassEncounter();
+        if (encounterCooldown > 0) encounterCooldown--;
     }
     
+    private void checkForGrassEncounter() {
+        if (encounterCooldown == 0 && isTouching(Grass.class)) {
+            if (Greenfoot.getRandomNumber(100) < 5) {
+                encounterCooldown = 100; // 100 frames cooldown (~2 seconden)
+                DataPlayer.setLastPosition(getX(), getY());
+                Greenfoot.setWorld(new BattleWorld());
+            }
+        }
+    }   
     public void addPokemonToInventory(String pokemonName) {
         PokemonParty.addPokemon(pokemonName);
         System.out.println(pokemonName + " added to your Pokémon inventory.");
@@ -153,6 +163,18 @@ public class Boy extends Actor {
             }
         }
     }
+    public class DataPlayer {
+    private static int lastX, lastY;
+
+    public static void setLastPosition(int x, int y) {
+        lastX = x;
+        lastY = y;
+    }
+
+    public static int getLastX() { return lastX; }
+    public static int getLastY() { return lastY; }
+}
+
 
     private boolean isTouchingWall(int x, int y) {
         Actor wall = getOneObjectAtOffset(x - getX(), y - getY(), Wall.class);
