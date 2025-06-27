@@ -68,12 +68,14 @@ public class Boy extends Actor {
     private void checkForGrassEncounter() {
         if (encounterCooldown == 0 && isTouching(Grass.class)) {
             if (Greenfoot.getRandomNumber(100) < 5) {
-                encounterCooldown = 100; // 100 frames cooldown (~2 seconden)
+                encounterCooldown = 100;
+                System.out.println("Encounter triggered at: " + getX() + "," + getY());
                 DataPlayer.setLastPosition(getX(), getY());
                 Greenfoot.setWorld(new BattleWorld());
             }
         }
-    }   
+    }
+   
     public void addPokemonToInventory(String pokemonName) {
         PokemonParty.addPokemon(pokemonName);
         System.out.println(pokemonName + " added to your Pokémon inventory.");
@@ -164,16 +166,16 @@ public class Boy extends Actor {
         }
     }
     public class DataPlayer {
-    private static int lastX, lastY;
-
-    public static void setLastPosition(int x, int y) {
-        lastX = x;
-        lastY = y;
+        private static int lastX, lastY;
+    
+        public static void setLastPosition(int x, int y) {
+            lastX = x;
+            lastY = y;
+        }
+    
+        public static int getLastX() { return lastX; }
+        public static int getLastY() { return lastY; }
     }
-
-    public static int getLastX() { return lastX; }
-    public static int getLastY() { return lastY; }
-}
 
 
     private boolean isTouchingWall(int x, int y) {

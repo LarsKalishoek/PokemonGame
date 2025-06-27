@@ -6,6 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Route101 extends GameWorld {
     private static final double SCALE = 0.60;
     private Boy boy;
+    private boolean cameraInitialized = false;
 
     public Route101(int spawnX, int spawnY) {
         super(600, 400, 1,

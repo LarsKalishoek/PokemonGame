@@ -6,6 +6,8 @@ public class Grass extends Actor {
     public Grass() {
         int size = (int)(16 * SCALE);
         GreenfootImage img = new GreenfootImage(size, size);
+        img.setColor(Color.RED); // tijdelijk zichtbaar
+        img.fill();
         setImage(img);
     }
 }
